@@ -58,7 +58,7 @@ async function main() {
         let cmd = ["ansible-playbook", playbook]
 
         if (options) {
-            cmd.push(options.replace(/\n/g, " "))
+            cmd.push(...options.split(/\s+/).filter(arg => arg))
         }
 
         if (directory) {
@@ -108,7 +108,8 @@ async function main() {
             const knownHostsFile = ".ansible_known_hosts"
             fs.writeFileSync(knownHostsFile, knownHosts, { mode: 0600 })
             core.saveState("knownHostsFile", knownHostsFile)
-            cmd.push(`--ssh-common-args="-o UserKnownHostsFile=${knownHostsFile}"`)
+            cmd.push("--ssh-common-args")
+            cmd.push(`-o UserKnownHostsFile=${knownHostsFile}`)
             process.env.ANSIBLE_HOST_KEY_CHECKING = "True"
         } else {
             process.env.ANSIBLE_HOST_KEY_CHECKING = "False"
@@ -125,7 +126,7 @@ async function main() {
         }
 
         let output = ""
-        await exec.exec(cmd.join(' '), null, {
+        await exec.exec(cmd[0], cmd.slice(1), {
           listeners: {
             stdout: function(data) {
               output += data.toString()
