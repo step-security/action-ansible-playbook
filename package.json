@@ -1,9 +1,32 @@
 {
   "name": "action-ansible-playbook",
-  "main": "main.js",
+  "version": "2.0.0",
+  "description": "GitHub Action to run Ansible playbooks",
+  "main": "dist/index.js",
+  "author": "step-security",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/step-security/action-ansible-playbook.git"
+  },
+  "homepage": "https://github.com/step-security/action-ansible-playbook",
+  "keywords": [
+    "ansible",
+    "playbook",
+    "github-action",
+    "ci",
+    "cd"
+  ],
+  "scripts": {
+    "build": "ncc build main.js -o dist && ncc build post.js -o dist/post"
+  },
   "dependencies": {
     "@actions/core": "^1.10.1",
     "@actions/exec": "^1.1.1",
+    "axios": "^1.16.0",
     "yaml": "^2.3.3"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.38.4"
   }
 }

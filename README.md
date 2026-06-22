@@ -10,7 +10,7 @@ Should work on any OS, if `ansible-playbook` command is available in `PATH`.
 
 ```yaml
 - name: Run playbook
-  uses: arqu/action-ansible-playbook@v2
+  uses: step-security/action-ansible-playbook@v2
   with:
     # Required, playbook filepath
     playbook: deploy.yml
